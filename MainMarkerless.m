@@ -1,9 +1,7 @@
 %% MARKERLESS DATA PROCESSING
 
 
-%d_fol1 = input(prompt,'s');
-sub = str2double(d_fol(end-33));
-side = d_fol(end-18);
+
 
 %x = inputdlg({'Dynamic Acquisitions Folder path','Static Acquisitions Folder path',},'Markerless Data Processing',[1 100; 1 100]);
 %d_fol = x(1);  %[cd '\Alba_Rago_Diletta_Balta_trial_1_D_L_21_03_2022_17_16\'];
