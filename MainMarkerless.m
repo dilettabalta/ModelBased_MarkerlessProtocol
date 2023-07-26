@@ -1,16 +1,5 @@
 %% MARKERLESS DATA PROCESSING
-clear all
-close all
-clc
-warning off
-addpath('include')
-% load d_fol1
-% FOLDERS with the dynamic and the static acquisitions
-disp('Select the dynamic acquisition folder:')
-d_fol = [uigetdir() '\'];
-%d_fol = input(prompt,'s');
-disp('Select the static acquisition folder:')
-d_fol1 = [uigetdir() '\'];
+
 
 %d_fol1 = input(prompt,'s');
 sub = str2double(d_fol(end-33));
