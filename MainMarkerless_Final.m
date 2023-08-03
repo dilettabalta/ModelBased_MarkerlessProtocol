@@ -70,6 +70,7 @@ conv_factor = 0.002; %see appendix A of the methodological paper for more detail
 [start1, stop1, start2, pos_IC1, pos_IC2, pos_IC1_c, stride_length, step_length, gait_speed] = gaitcycle(d_fol, start, stop, side, conv_factor);
 cd ..
 save start1 start1
+save stop1 stop1
 B = imread([d_fol 'color_stream\color0.png']); %Background frame (B)
 crop_seq_txt_Azure(d_fol,start1+1,stop1+1); %creation of 2 folders ('VIDEO' e 'MATCH_d_raw') containing RGB and Depth images of the analyzed gait cycle
 mkdir([d_fol 'Misc\Segm']); %folder containing the segmentation masks for each gait cycle
