@@ -1,7 +1,7 @@
 function template = dynamic_calib_ok_provaAzure_v1(d_fol,frame,side,Type,~)
 %Author: Diletta Balta
 %Department of Electronics and Telecommunications
-%Politecnico di Torino 
+%Politecnico di Torino
 %diletta.balta@polito.it
 
 %This function provides a MATLAB structure containing a set of body segments
@@ -18,8 +18,8 @@ function template = dynamic_calib_ok_provaAzure_v1(d_fol,frame,side,Type,~)
 %template is MATLAB structure containing a set of body segments templates (foot template, shank template and thigh template)
 
 show_save_all = true;
-dim1_f = 720; 
-dim2_f = 1280; 
+dim1_f = 720;
+dim2_f = 1280;
 thr_cut = 0.9;
 thr_sole_start = 0.2;
 thr_sole_end = 0.5;
@@ -36,7 +36,7 @@ save_fol = [d_fol 'Calib\'];
 status_graphs=mkdir(save_fol);
 
 if status_graphs
-      mkdir(save_fol);
+    mkdir(save_fol);
 end
 
 rgb_rect = imread([d_fol 'Video\' ref '.bmp']);
@@ -60,7 +60,7 @@ MLRef=[y_mal, x_mal];
 KNRef=[y_gin, x_gin];
 TRRef=[y_tr, x_tr];
 shank_length= pdist([x_mal,y_mal;x_gin, y_gin],'euclidean');
-m_shank = -(y_mal-y_gin)/(x_mal-x_gin); 
+m_shank = -(y_mal-y_gin)/(x_mal-x_gin);
 alpha_shank = atan(m_shank);
 if alpha_shank<0
     alpha_shank = alpha_shank + deg2rad(180);
@@ -344,28 +344,28 @@ depth_segm_el(depth_segm_el<lim_left) = NaN;
 h = histogram(depth_segm_el);
 
 %% Otsu technique to identify the foregroung shank
-    level = multithresh(depth_segm_el,1); 
-    binLocations=h.BinEdges';
-    binLocations(end)=[]; 
-    counts=h.Values';
-    first_clust=binLocations<=level(1); % First cluster
-    second_clust=binLocations>level(1) & binLocations<=lim_right; %Second cluster
-    [~, ind_firstpeak] = max(counts(first_clust)); % First cluster peak
-    [~, ind_secondpeak] = max(counts(second_clust)); % Second cluster peak
-    vettore_ind = [binLocations(ind_firstpeak) binLocations(find(second_clust,1)+ind_secondpeak-1)];
-    d_ind = diff(vettore_ind);
-    ind_merg = (d_ind<=30);
-    if ind_merg == 1
-        shank_start = lim_left;
-        shank_stop = lim_right;
-    else
-        figure()
-        histogram(depth_segm_el,'BinEdges',lim_left:lim_right)
-        xline(level(1),'--g','LineWidth',0.9)
+level = multithresh(depth_segm_el,1);
+binLocations=h.BinEdges';
+binLocations(end)=[];
+counts=h.Values';
+first_clust=binLocations<=level(1); % First cluster
+second_clust=binLocations>level(1) & binLocations<=lim_right; %Second cluster
+[~, ind_firstpeak] = max(counts(first_clust)); % First cluster peak
+[~, ind_secondpeak] = max(counts(second_clust)); % Second cluster peak
+vettore_ind = [binLocations(ind_firstpeak) binLocations(find(second_clust,1)+ind_secondpeak-1)];
+d_ind = diff(vettore_ind);
+ind_merg = (d_ind<=30);
+if ind_merg == 1
+    shank_start = lim_left;
+    shank_stop = lim_right;
+else
+    figure()
+    histogram(depth_segm_el,'BinEdges',lim_left:lim_right)
+    xline(level(1),'--g','LineWidth',0.9)
 
-        shank_start = lim_left;
-        shank_stop = level;
-    end
+    shank_start = lim_left;
+    shank_stop = level;
+end
 
 
 % if strcmp(Type,'static')
@@ -442,7 +442,7 @@ depth_segm_el = round(depth_segm_el);
 shank_depth = immultiply(shank_rect,depth_match);
 most_freq = nanmedian(nanmedian(shank_depth(shank_depth~=0))); %#ok<NANMEDIAN>
 
-lim_left = 2200;
+lim_left = 2300;
 lim_right = 2850;
 depth_segm_el(depth_segm_el>lim_right) = NaN;
 depth_segm_el(depth_segm_el<lim_left) = NaN;
@@ -450,7 +450,7 @@ depth_segm_el(depth_segm_el<lim_left) = NaN;
 h = histogram(depth_segm_el,lim_left:lim_right);
 
 %% Otsu technique to identify the foregroung thigh
-level = multithresh(depth_segm_el,2); 
+level = multithresh(depth_segm_el,2);
 % figure
 % histogram(depth_segm_el,'BinEdges',lim_left:lim_right),title('First histogram with 2 thresholds'), xlabel('Distance from camera (mm)'),ylabel('Pixels occurences')
 % set(gca,'Color',[0.50, 0.50, 0.50]) % Colore sfondo
@@ -459,7 +459,7 @@ level = multithresh(depth_segm_el,2);
 % xline(level(2),'--r','LineWidth',0.9)
 
 binLocations=h.BinEdges';
-binLocations(end)=[]; 
+binLocations(end)=[];
 counts=h.Values';
 first_clust=binLocations<=level(1); % First cluster
 second_clust=binLocations>level(1) & binLocations<=level(2); % Second cluster
@@ -476,13 +476,13 @@ peak_merg = abs(d_peak)<=180;
 inters = ind_merg & peak_merg;
 
 if nnz(inters)==0 %in the circle there are the foreground hand, the foreground and background thighs
-%     figure()
-%     histogram(depth_segm_el,'BinEdges',lim_left:lim_right),title('Depth histogram'), xlabel('Distance from camera (mm)'),ylabel('Pixels occurences')
-%     set(gca,'Color',[0.50, 0.50, 0.50]) % Colore sfondo
-%     hold on
-%     xline(level(1),'--g','LineWidth',0.9)
-%     xline(level(2),'--r','LineWidth',0.9)
-%     legend('','First Otsu thereshold','Second Otsu thereshold')
+    %     figure()
+    %     histogram(depth_segm_el,'BinEdges',lim_left:lim_right),title('Depth histogram'), xlabel('Distance from camera (mm)'),ylabel('Pixels occurences')
+    %     set(gca,'Color',[0.50, 0.50, 0.50]) % Colore sfondo
+    %     hold on
+    %     xline(level(1),'--g','LineWidth',0.9)
+    %     xline(level(2),'--r','LineWidth',0.9)
+    %     legend('','First Otsu thereshold','Second Otsu thereshold')
     idx = depth_segm_el>level(1) & depth_segm_el<level(2);
     thigh_hand_start = lim_left;
     thigh_hand_stop = level(2);
@@ -491,19 +491,19 @@ if nnz(inters)==0 %in the circle there are the foreground hand, the foreground a
 else
     ind_min = find(inters);
     level = multithresh(depth_segm_el,1);
-    first_clust=binLocations<=level(1); 
+    first_clust=binLocations<=level(1);
     second_clust=binLocations>level(1);
     [First_peak, ~] = max(counts(first_clust)); % First cluster peak
     [Second_peak, ~] = max(counts(second_clust)); % Second cluster peak
-    if First_peak>Second_peak 
-%         figure()
-%         histogram(depth_segm_el,'BinEdges',lim_left:lim_right),title('Depth histogram '), xlabel('Distance from camera (mm)'),ylabel('Pixels occurences')
-%         set(gca,'Color',[0.50, 0.50, 0.50])
-%         hold on
-%         xline(level,'--r','LineWidth',0.9)
-%         legend('','Otsu thereshold')
+    if First_peak>Second_peak
+        %         figure()
+        %         histogram(depth_segm_el,'BinEdges',lim_left:lim_right),title('Depth histogram '), xlabel('Distance from camera (mm)'),ylabel('Pixels occurences')
+        %         set(gca,'Color',[0.50, 0.50, 0.50])
+        %         hold on
+        %         xline(level,'--r','LineWidth',0.9)
+        %         legend('','Otsu thereshold')
         if sum(counts(first_clust))>sum(counts(second_clust)) %the first cluster is the foreground thigh
-            idx=depth_segm_el<level; 
+            idx=depth_segm_el<level;
             thigh_hand_start = lim_left;
             thigh_hand_stop = lim_right;
             thigh_start = lim_left;
@@ -516,7 +516,7 @@ else
         end
     else
         if sum(counts(first_clust))>sum(counts(second_clust)) %the first cluster is the foreground thigh
-            idx=depth_segm_el<level; 
+            idx=depth_segm_el<level;
             thigh_hand_start = lim_left;
             thigh_hand_stop = lim_right;
             thigh_start = lim_left;
@@ -527,15 +527,36 @@ else
             thigh_start = level;
             thigh_stop = lim_right;
         end
-     end
+    end
 end
 
-% if strcmp(Type,'static')
-%     thigh_hand_start = lim_left;
-%     thigh_hand_stop = lim_right;
-%     thigh_start = lim_left;
-%     thigh_stop = lim_right;
-% end
+if strcmp(Type,'static')
+    level = multithresh(depth_segm_el,1);
+    binLocations=h.BinEdges';
+    binLocations(end)=[];
+    counts=h.Values';
+    first_clust=binLocations<=level(1); % First cluster
+    second_clust=binLocations>level(1) & binLocations<=lim_right; %Second cluster
+    [~, ind_firstpeak] = max(counts(first_clust)); % First cluster peak
+    [~, ind_secondpeak] = max(counts(second_clust)); % Second cluster peak
+    vettore_ind = [binLocations(ind_firstpeak) binLocations(find(second_clust,1)+ind_secondpeak-1)];
+    d_ind = diff(vettore_ind);
+    ind_merg = d_ind<=100;
+    if ind_merg == 1
+        thigh_hand_start = lim_left;
+        thigh_hand_stop = lim_right;
+        thigh_start = lim_left;
+        thigh_stop = lim_right;
+    else
+        %         figure()
+        %         histogram(depth_segm_el,'BinEdges',lim_left:lim_right)
+        %         xline(level(1),'--g','LineWidth',0.9)
+        thigh_hand_start = lim_left;
+        thigh_hand_stop = level;
+        thigh_start = lim_left;
+        thigh_stop = level;
+    end
+end
 
 
 thigh_low_cut_par = 1/6;

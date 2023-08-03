@@ -1,15 +1,15 @@
 function results = kinematic_evaluationV2(d_fol,side_type,events,results)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunication
-%Politecnico di Torino 
+%Department of Electronics and Telecommunications
+%Politecnico di Torino
 %diletta.balta@polito.it
 
 %This function provides the sagittal lower-limb joint angles following the methods described in the methodological paper (paragraph
-%JOINT KINEMATICS ESTIMATION). 
-% For each joint, three kinematic curves were obtained based on the three sets of body segment templates. 
+%JOINT KINEMATICS ESTIMATION).
+% For each joint, three kinematic curves were obtained based on the three sets of body segment templates.
 % These curves were then combined into a single curve by a nonlinear sinusoid weight function based on the percentage of the gait cycle
 
-%inputs 
+%inputs
 %d_fol = folder containing the dynamic acquisition
 %side_type = R (right) or L (left)
 %events = vector containing [first frame, last frame, loading frame, stance
@@ -17,7 +17,7 @@ function results = kinematic_evaluationV2(d_fol,side_type,events,results)
 %results = a MATLAB structure containing LM, LE and GT positions for each template (static, loading and
 %swing models)
 
-%outputs 
+%outputs
 %results = a MATLAB structure containing ankle, knee and hip kinematics
 
 set(0,'DefaultFigureVisible','on')
@@ -197,7 +197,7 @@ xlabel('%')
 ylabel('degree')
 savename1 = ['hip.tif'];
 saveas(h,fullfile(d_fol,savename1));
-% 
+%
 % ankle figure
 h = figure;
 set(gcf,'Position',[1 1 1366 685]) %fullscreen plot
@@ -208,7 +208,7 @@ xlabel('%')
 ylabel('degree')
 savename1 = ['ankle.tif'];
 saveas(h,fullfile(d_fol,savename1));
-% 
+%
 % knee figure
 h = figure;
 set(gcf,'Position',[1 1 1366 685]) %fullscreen plot

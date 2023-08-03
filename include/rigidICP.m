@@ -2,8 +2,8 @@ function [error,Reallignedsource,transform]=rigidICP(target,source)
 
 % This function rotates, translates and scales a 3D pointcloud "source" of N*3 size (N points in N rows, 3 collumns for XYZ)
 % to fit a similar shaped point cloud "target" again of N by 3 size
-% 
-% The output shows the minimized value of dissimilarity measure in "error", the transformed source data set and the 
+%
+% The output shows the minimized value of dissimilarity measure in "error", the transformed source data set and the
 % transformation, rotation, scaling and translation in transform.T, transform.b and transform.c such that
 % Reallignedsource = b*source*T + c;
 
@@ -33,10 +33,10 @@ index=2;
 [errortemp(index,:),Reallignedsourcetemp,sc]=ICPmanu_allign2(Prealligned_target,Prealligned_source);
 % scaling = [sc];
 while (abs(errortemp(index-1,:)-errortemp(index,:)))>0.000001
-[errortemp(index+1,:),Reallignedsourcetemp,sc]=ICPmanu_allign2(Prealligned_target,Reallignedsourcetemp);
-% scaling = [scaling sc];
-index=index+1;
-% d=errortemp(index,:)
+    [errortemp(index+1,:),Reallignedsourcetemp,sc]=ICPmanu_allign2(Prealligned_target,Reallignedsourcetemp);
+    % scaling = [scaling sc];
+    index=index+1;
+    % d=errortemp(index,:)
 end
 
 error=errortemp(index,:);

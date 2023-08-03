@@ -1,7 +1,7 @@
 function subject_segmentation(d_fol,frames,B,side,~)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunication
-%Politecnico di Torino 
+%Department of Electronics and Telecommunications
+%Politecnico di Torino
 %diletta.balta@polito.it
 
 %This function provides a segmentation mask of the subject for each frame
@@ -10,7 +10,7 @@ function subject_segmentation(d_fol,frames,B,side,~)
 
 %inputs
 %d_fol = folder containing the dynamic acquisition
-%frames = list containing the number of frames of the gait cycle 
+%frames = list containing the number of frames of the gait cycle
 %B = background image
 %side = R (right) or L (left)
 
@@ -18,7 +18,7 @@ set(0, 'DefaultFigureVisible', 'off')
 
 for i = 1:frames
     display(['Segmenting the subject in frame ', num2str(i), '/',num2str(frames)]);
-    
+
     if i-1<10
         I = imread([d_fol 'Video\000' num2str(i-1) '.bmp']);
         D = readmatrix([d_fol '\Misc\MATCH_d_raw\000' num2str(i-1) '.txt']);
@@ -40,7 +40,7 @@ for i = 1:frames
     D_norm = uint8(255*(Difference-min(Difference(:)))/(max(Difference(:))-min(Difference(:))));
     [count,bins] = imhist(D_norm);
     th_start = round(sum(count.*bins)/sum(count));
-    figure,imshow(D_norm)
+%     figure,imshow(D_norm)
     idx = D_norm>=th_start; %threshoding
     bw = zeros(size(D_norm));
     bw(idx) = 1;
@@ -51,14 +51,14 @@ for i = 1:frames
 
     %     figure,imshow(bw1)
 
-    bw1(Depth>2800) = 0; %removal of residuals areas belonging to the background
+    bw1(Depth>2850) = 0; %removal of residuals areas belonging to the background
     bw1(Depth==0) = 0;
     [D_imm_l_t, D_imm_r_t] = Feet_segmentation_dyn1(I); %feet segmentation
-    figure,imshow(D_imm_r_t)
+%     figure,imshow(D_imm_r_t)
     D_imm_feet = D_imm_l_t | D_imm_r_t;
     cd (d_fol)
     mkdir Feet_segmentation
-    h = figure;imshowpair(I,D_imm_feet),saveas(gcf,['Feet_segmentation\Feet', num2str(i-1) ,'.jpg']);
+%     h = figure;imshowpair(I,D_imm_feet),saveas(gcf,['Feet_segmentation\Feet', num2str(i-1) ,'.jpg']);
     cd ..
     % Feet segmentation refinement
     if side == 'R'
@@ -131,11 +131,11 @@ for i = 1:frames
     foot2_dil = imdilate(foot2_rect,strel('disk',2));
 
     bw2 = bw1 & (not((logical(foot1_dil))|(logical(foot2_dil))));
-    bw3 = bwareaopen(bw2,100);
+    bw3 = bwareaopen(bw2,50);
 
     bw_final = bw3 | foot1_rect | foot2_rect;
 
-    %% Green carpet segmentation (optional) 
+    %% Green carpet segmentation (optional)
     %Based on the environment/lights conditions, the thresholds for the color
     %filter have to be adjusted
 
@@ -149,11 +149,11 @@ for i = 1:frames
 
         end
     end
-    figure('Visible','off'),
-    imshow(Carpet)
+%     figure('Visible','off'),
+%     imshow(Carpet)
     bw_final = bw_final - Carpet;
     bw_final(bw_final == -1) = 0;
-    figure('Visible','off'),imshow(bw_final)
+%     figure('Visible','off'),imshow(bw_final)
     if i-1<10
         imwrite(bw_final,[d_fol 'Misc\Segm\000' num2str(i-1) '.bmp'])
     elseif i-1>=10 && i-1<100

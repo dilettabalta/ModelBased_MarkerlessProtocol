@@ -1,19 +1,19 @@
 function mod = doTripleInterp(a, b, c, param, f)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunication
-%Politecnico di Torino 
+%Department of Electronics and Telecommunications
+%Politecnico di Torino
 %diletta.balta@polito.it
 
 %This function provides LM, LE and GT positions obtained by weighting each template contribution by a nonlinear sinusoid weight function based on the percentage of the gait cycle
 
-%inputs 
+%inputs
 %a = anatomical landmark positions obtained by the loading template
 %b = anatomical landmark positions obtained by the static template
 %c = anatomical landmark positions obtained by the swingg template
 %param = modulation parameters
 %f = stance frame
 
-%outputs 
+%outputs
 %mod = final anatomical landmark positions obtained by weighting each template contribution by a nonlinear sinusoid weight function based on the percentage of the gait cycle
 
 beta = param.beta';

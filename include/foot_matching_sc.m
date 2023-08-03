@@ -1,18 +1,18 @@
 function results = foot_matching_sc(d_fol,side_type,lis,template,~)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunication
-%Politecnico di Torino 
+%Department of Electronics and Telecommunications
+%Politecnico di Torino
 %diletta.balta@polito.it
 
-%This function provides LM positions in each frame by matching the foot template to each foot segmentation mask by using ICP following the methods described in the methodological paper 
-% paragraph JOINT CENTERS TRAJECTORIES ESTIMATION - Ankle joint center (AJC) estimation). 
+%This function provides LM positions in each frame by matching the foot template to each foot segmentation mask by using ICP following the methods described in the methodological paper
+% paragraph JOINT CENTERS TRAJECTORIES ESTIMATION - Ankle joint center (AJC) estimation).
 
-%inputs 
+%inputs
 %d_fol = folder containing the dynamic acquisition
-%lis = list containing the number of frames of the gait cycle 
+%lis = list containing the number of frames of the gait cycle
 %template = static/loading/swing foot template
 
-%outputs 
+%outputs
 %results = a MATLAB structure containing LM position on each frame
 
 close all;
@@ -76,7 +76,7 @@ for lu = inizio:length(lis)
     I = rgb_or;
     [D_imm_l_t, D_imm_r_t] = Feet_segmentation_dyn1(I);
 
-    %figure,imshow(D_imm_r_t|D_imm_l_t)    
+    %figure,imshow(D_imm_r_t|D_imm_l_t)
     %h = figure; imshow(I), hold on,visboundaries(D_imm_r_t|D_imm_l_t)
 
     % Feet refinement through morphological operators
@@ -163,11 +163,11 @@ for lu = inizio:length(lis)
     catch
         D2_imm = false(dim1_f,dim2_f);
     end
-    
+
     foot2_rect = D2_imm;
     results.foot2_imm{lu} = foot2_rect;
 
-%     figure,imshow(foot1_rect)
+    %     figure,imshow(foot1_rect)
 
     %%contour
     [e_r_in_D,e_c_in_D] = find(edge(foot1_rect,'canny'));
@@ -180,7 +180,7 @@ for lu = inizio:length(lis)
 
     %%area
     [f_r_in_D,f_c_in_D] = find(D1_imm);
-%     figure,imshow(D1_imm)
+    %     figure,imshow(D1_imm)
 
     %inverting and scaling y-axis
     f_rr_in_D = abs(f_r_in_D-dim1_f)+1;

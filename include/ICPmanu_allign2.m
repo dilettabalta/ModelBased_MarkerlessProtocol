@@ -20,4 +20,4 @@ Datasettarget=vertcat(target(IDX1(:,1),:),target(IDX2(:,3),:));
 Reallignedsource=transform.b*source*transform.T+repmat(transform.c(1,1:end),size(source,1),1);
 scaling = transform.b;
 
-
+end

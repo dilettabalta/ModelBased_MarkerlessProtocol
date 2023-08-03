@@ -1,7 +1,7 @@
 function [start1, stop1, start2, pos_IC1, pos_IC2, pos_IC1_c, stride_length, step_length, gait_speed] = gaitcycle(d_fol, start, stop, side, conv_factor)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunication
-%Politecnico di Torino 
+%Department of Electronics and Telecommunications
+%Politecnico di Torino
 %diletta.balta@polito.it
 
 %This function identifies the first and the last frame of the most central
@@ -23,7 +23,7 @@ function [start1, stop1, start2, pos_IC1, pos_IC2, pos_IC1_c, stride_length, ste
 %outputs
 %start1 = first frame of the gait cycle
 %stop1 = last frame of the gait cycle
-%start2 = frame representing the contact of the background foot 
+%start2 = frame representing the contact of the background foot
 %pos_IC1 = position of first initial contact of the foreground foot
 %pos_IC2 = position of the following initial contact of the foreground foot
 %pos_IC1_c = position of the first initial contact of the backgroung foot
@@ -847,12 +847,12 @@ heelr = heelr_c(ind_start:ind_stop);
 toec = toec_c(ind_start:ind_stop);
 toer = toer_c(ind_start:ind_stop);
 set(0, 'DefaultFigureVisible', 'on')
-figure,plot(heelc,'.-')
-hold on
-plot(heelr,'.-'),legend('y','x'),title('MRF coordinates')
-figure,plot(toec,'.-')
-hold on
-plot(toer,'.-'),legend('y','x'),title('RF coordinates')
+% figure,plot(heelc,'.-')
+% hold on
+% plot(heelr,'.-'),legend('y','x'),title('MRF coordinates')
+% figure,plot(toec,'.-')
+% hold on
+% plot(toer,'.-'),legend('y','x'),title('RF coordinates')
 
 dheelc = diff(heelc);
 dheelr = diff(heelr);
@@ -882,9 +882,9 @@ fine_heel_c = find((d1>3));
 int_heel_c = [ind_contact_heel_c(1) ind_contact_heel_c(fine_heel_c) ind_contact_heel_c(fine_heel_c+1) ind_contact_heel_c(end)];
 int_heel_c = unique(sort(int_heel_c));
 
-figure,plot(heelc)
-hold on
-xline(int_heel_c),title('Heel coordinates - x axis')
+% figure,plot(heelc)
+% hold on
+% xline(int_heel_c),title('Heel coordinates - x axis')
 
 %% MRF - rows
 contact_heel_r = (abs(dheelr)<=Thrighe);
@@ -895,9 +895,9 @@ fine_heel_r = find((d2>1));
 int_heel_r = [ind_contact_heel_r(1) ind_contact_heel_r(fine_heel_r)+1 ind_contact_heel_r(fine_heel_r+1) ind_contact_heel_r(end)];
 int_heel_r = unique(sort(int_heel_r));
 
-figure,plot(heelr)
-hold on
-xline(int_heel_r),title('Heel coordinates - y axis')
+% figure,plot(heelr)
+% hold on
+% xline(int_heel_r),title('Heel coordinates - y axis')
 
 %% Toe - columns
 contact_toe_c = (abs(dtoec)<=Thcolonne);
@@ -908,9 +908,9 @@ fine_toe_c = find((d3>1));
 int_toe_c = [ind_contact_toe_c(1) ind_contact_toe_c(fine_toe_c)+1 ind_contact_toe_c(fine_toe_c+1) ind_contact_toe_c(end)+1];
 int_toe_c = unique(sort(int_toe_c));
 
-figure,plot(toec)
-hold on
-xline(int_toe_c),title('Toe coordinates - x axis')
+% figure,plot(toec)
+% hold on
+% xline(int_toe_c),title('Toe coordinates - x axis')
 
 int_heel_c = int_heel_c(1:2:end);
 int_heel_c(int_heel_c == 1) = [];

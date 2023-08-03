@@ -1,7 +1,7 @@
 function crop_seq_txt_Azure(d_fol,start,stop,frame)
 %Author: Diletta Balta
 %Department of Electronics and Telecommunications
-%Politecnico di Torino 
+%Politecnico di Torino
 %diletta.balta@polito.it
 
 %This function creates 2 folders ('VIDEO' e 'MATCH_d_raw') containing RGB and Depth images of the analyzed gait cycle
@@ -43,7 +43,7 @@ for k=len:-1:1
     end
 end
 
-%% Saving of the RGB and depth images of the selected gait cycle 
+%% Saving of the RGB and depth images of the selected gait cycle
 if ~exist('frame','var')
     fr = 0;
 else

@@ -94,7 +94,7 @@ connectpoints = p.Results.ConnectPoints;
 %--------------------------------------------------------------------------
     function tf = colorValidFcn(in)
         % This function validates the color input parameter
-        
+
         validateattributes(in, {'char', 'double'}, {'nonempty'});
         if ischar(in)
             validatestring(in, {'b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'});
@@ -161,7 +161,7 @@ if showpoints
     else
         pointsLineStyle = 'none';
     end
-    
+
     selectedPoints = [];
     hPoints = line(nan, nan, ...
         'Parent', hInvisibleAxes, ...
@@ -241,7 +241,7 @@ uiwait(hFig);
             hText = text(C(1,1)+10,C(1,2)+15,str,'Fontsize',14);
         end
         cursorPt = get(hInvisibleAxes, 'CurrentPoint');
-        
+
         set(hCursor, ...
             'XData', [0 1 nan cursorPt(1) cursorPt(1)], ...
             'YData', [cursorPt(3) cursorPt(3) nan 0 1]);
@@ -253,7 +253,7 @@ uiwait(hFig);
         % This function captures mouse clicks.
         % If the tooltip control is clicked, then toggle tooltip display.
         % If anywhere else is clicked, record point.
-        
+
         if isequal(gco, hTooltipControl)
             tooltipClickFcn();
         else
@@ -268,11 +268,11 @@ uiwait(hFig);
         % If "escape", then exit.
         % If "delete" (or "backspace"), then delete previous point.
         % If any other key, record point.
-        
+
         %         clearvars key
         key = double(get(hFig, 'CurrentCharacter'));
         set(hFig, 'CurrentCharacter','q');
-        
+
         if ~isempty(key)
             switch key
                 case 27  % escape
@@ -281,7 +281,7 @@ uiwait(hFig);
                     button = [];
                     ax = [];
                     exitFcn();
-                    
+
                 case {8, 127}   % delete or backspace
                     if ~isempty(x)
                         x(end) = [];
@@ -294,20 +294,20 @@ uiwait(hFig);
                         if ~isempty(ax)
                             ax(end) = [];
                         end
-                        
+
                         if showpoints
                             selectedPoints(end, :) = [];
                             set(hPoints, ...
                                 'XData', selectedPoints(:, 1), ...
                                 'YData', selectedPoints(:, 2));
                         end
-                        
+
                         displayCoordinates();
                     end
-                    
+
                 otherwise
                     %                 updatePoints(key);
-                    
+
             end
         end
     end
@@ -316,13 +316,13 @@ uiwait(hFig);
 %--------------------------------------------------------------------------
     function updatePoints(clickType)
         % This function captures the information for the selected point
-        
+
         hAx = gca;
         pt = get(hAx, 'CurrentPoint');
         x = [x; pt(1)];
         y = [y; pt(3)];
         ax = [ax; hAx];
-        
+
         if ischar(clickType)   % Mouse click
             switch lower(clickType)
                 case 'open'
@@ -336,9 +336,9 @@ uiwait(hFig);
             end
         end
         button = [button; clickType];
-        
+
         displayCoordinates();
-        
+
         if showpoints
             if length(x) ~= N
                 cursorPt = get(hInvisibleAxes, 'CurrentPoint');
@@ -348,7 +348,7 @@ uiwait(hFig);
                     'YData', selectedPoints(:, 2));
             end
         end
-        
+
         mouseMoveFcn;
         % If captured all points, exit
         if length(x) == N
@@ -360,7 +360,7 @@ uiwait(hFig);
 %--------------------------------------------------------------------------
     function tooltipClickFcn()
         % This function toggles the display of the tooltip
-        
+
         if strcmp(get(hTooltipControl, 'String'), 'SHOW')
             set(hTooltipControl, 'String', 'HIDE');
             set(hTooltip, 'Visible', 'on');
@@ -374,7 +374,7 @@ uiwait(hFig);
 %--------------------------------------------------------------------------
     function displayCoordinates()
         % This function updates the coordinates display in the tooltip
-        
+
         if isempty(x)
             str = 'No points';
         else
@@ -390,7 +390,7 @@ uiwait(hFig);
     function resizeFcn(varargin)
         % This function adjusts the position of tooltip when the figure is
         % resized
-        
+
         sz = get(hTooltipControl, 'Extent');
         set(hTooltip, 'Position', [0 sz(2)]);
     end
@@ -399,7 +399,7 @@ uiwait(hFig);
 %--------------------------------------------------------------------------
     function exitFcn()
         % This function exits GINPUTC and restores previous figure settings
-        
+
         % Restore window functions and pointer
         set(hFig, 'WindowButtonDownFcn', curWBDF);
         set(hFig, 'WindowButtonMotionFcn', curWBMF);
@@ -409,12 +409,12 @@ uiwait(hFig);
         set(hFig, 'ResizeFcn', curRF);
         set(hFig, 'Pointer', curPointer);
         set(hFig, 'PointerShapeCData', curPointerShapeCData);
-        
+
         try %#ok<TRYNC> % for newer versions of MATLAB
             set(hFig, 'WindowKeyPressFcn', curWKPF);
             set(hFig, 'WindowKeyReleaseFcn', curWKRF);
         end
-        
+
         % Delete invisible axes and return control
         delete(hInvisibleAxes);
         global hText;

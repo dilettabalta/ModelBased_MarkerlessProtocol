@@ -1,11 +1,11 @@
 function plot_results_interp(d_fol,~,results)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunication
+%Department of Electronics and Telecommunications
 %Politecnico di Torino
 %diletta.balta@polito.it
 
 %This function provides all the frames of the gait cycle with LM, LE and GT
-%positions superimposed on the images ('Result_interp' folder)
+%positions superimposed to the images ('Result_interp' folder)
 
 %inputs
 %d_fol = folder containing the dynamic acquisition
