@@ -1,6 +1,6 @@
 %% MARKERLESS DATA PROCESSING
 %Author: Diletta Balta
-%Department of Electronics and Telecommunication
+%Department of Electronics and Telecommunications
 %Politecnico di Torino 
 %diletta.balta@polito.it
 
@@ -9,8 +9,8 @@ close all
 clc
 
 warning off
-addpath('include')
-pathname = 'D:\Codici_MLM'; %path containing the MATLAB codes
+addpath('D:\Codici_MLM_final\include')
+pathname = 'D:\Codici_MLM_final'; %path containing the MATLAB codes
 
 % FOLDERS with the dynamic and the static acquisitions
 disp('Select the dynamic acquisition folder:')
@@ -66,12 +66,10 @@ catch
 end
 
 %% Gait cycle identification
-conv_factor = 0.2; %see appendix A of the methodological paper for more details on how to set this parameter
+conv_factor = 0.002; %see appendix A of the methodological paper for more details on how to set this parameter
 [start1, stop1, start2, pos_IC1, pos_IC2, pos_IC1_c, stride_length, step_length, gait_speed] = gaitcycle(d_fol, start, stop, side, conv_factor);
 cd ..
 save start1 start1
-save stop1 stop1
-
 B = imread([d_fol 'color_stream\color0.png']); %Background frame (B)
 crop_seq_txt_Azure(d_fol,start1+1,stop1+1); %creation of 2 folders ('VIDEO' e 'MATCH_d_raw') containing RGB and Depth images of the analyzed gait cycle
 mkdir([d_fol 'Misc\Segm']); %folder containing the segmentation masks for each gait cycle
@@ -166,7 +164,7 @@ for jj=3:size(listu,1)
     end
 end
 lis2=sort(lis2,'ascend');
-addpath('D:\Codici_MLM\include')
+addpath('D:\Codici_MLM_final\include')
 disp('Kinematic estimations in:')
 res_static_f = foot_matching_sc(d_fol,side,lis2,template.static,sub); %foot fitting for estimating the lateral malleoulus through the static model
 res_static_f_s = shank_matching_Azure_nuova_v1(d_fol,lis2,template.static,res_static_f);%shank fitting for estimating the lateral epicondyle through the static  model
