@@ -1,6 +1,6 @@
 function [D_imm_l_t, D_imm_r_t, I1] = Feet_segmentation_dyn1(I)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunication
+%Department of Electronics and Telecommunications
 %Politecnico di Torino 
 %diletta.balta@polito.it
 
@@ -27,7 +27,7 @@ D_imm_l_t = false(size(I,1),size(I,2));
 for r = 480:600 
     for c = 165:1100 % Colonne
         pix = [I(r,c,1) I(r,c,2) I(r,c,3)];
-        if  pix(1)<30 && pix(2)>=40 && pix(2)<=90 && pix(3)>80 && pix(3)<=220 %left foot blue
+        if  pix(1)<60 && pix(2)>=40 && pix(2)<=100 && pix(3)>90 && pix(3)<=250 %left foot blue
             D_imm_l_t(r,c) = true;
         end
         if  pix(1)>30 && pix(2)<30 && pix(3)<40 %right foot red 

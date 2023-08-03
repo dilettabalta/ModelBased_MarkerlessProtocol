@@ -697,8 +697,8 @@ dheelc = diff(heelc); %first derivative of y-coordinates (Heel)
 dheelr = diff(heelr); %first derivative of x-coordinates (Heel)
 dtoec = diff(toec); %first derivative of y-coordinates (Toe)
 dtoer = diff(toer); %first derivative of x-coordinates (Toe)
-Thcolonne = 3; %this parameter could be tuned based on the gait of the subject
-Thrighe = 3; %this parameter could be tuned based on the gait of the subject
+Thcolonne = 2; %this parameter could be tuned based on the gait of the subject
+Thrighe = 2; %this parameter could be tuned based on the gait of the subject
 
 % figure,plot(dheelc),title('first derivative of y-coordinates - Heel')
 % yline(Thcolonne)
@@ -719,33 +719,33 @@ contact_heel_c = (abs(dheelc)<=Thcolonne);
 contact_heel_c = bwareaopen(contact_heel_c,3);
 ind_contact_heel_c = find(contact_heel_c);
 d1 = diff(ind_contact_heel_c);
-fine_heel_c = find((d1>1));
+fine_heel_c = find((d1>6));
 int_heel_c = [ind_contact_heel_c(1) ind_contact_heel_c(fine_heel_c) ind_contact_heel_c(fine_heel_c+1) ind_contact_heel_c(end)];
 int_heel_c = unique(sort(int_heel_c)); %instants of stationarity of the y-coordinates (heel)
 
-figure,plot(heelc)
-hold on
-xline(int_heel_c),title('Heel coordinates - x axis')
+% figure,plot(heelc)
+% hold on
+% xline(int_heel_c),title('Heel coordinates - x axis')
 
 %% Heel - rows
 contact_heel_r = (abs(dheelr)<=Thrighe);
-contact_heel_r = bwareaopen(contact_heel_r,3);
+contact_heel_r = bwareaopen(contact_heel_r,4);
 ind_contact_heel_r = find(contact_heel_r);
 d2 = diff(ind_contact_heel_r);
 fine_heel_r = find((d2>1));
 int_heel_r = [ind_contact_heel_r(1) ind_contact_heel_r(fine_heel_r)+1 ind_contact_heel_r(fine_heel_r+1) ind_contact_heel_r(end)];
 int_heel_r = unique(sort(int_heel_r));  %instants of stationarity of the x-coordinates (heel)
 
-figure,plot(heelr)
-hold on
-xline(int_heel_r),title('Heel coordinates - y axis')
+% figure,plot(heelr)
+% hold on
+% xline(int_heel_r),title('Heel coordinates - y axis')
 
 %% Toe - columns
 contact_toe_c = (abs(dtoec)<=Thcolonne);
 contact_toe_c = bwareaopen(contact_toe_c,3);
 ind_contact_toe_c = find(contact_toe_c);
 d3 = diff(ind_contact_toe_c);
-fine_toe_c = find((d3>1));
+fine_toe_c = find((d3>3));
 int_toe_c = [ind_contact_toe_c(1) ind_contact_toe_c(fine_toe_c)+1 ind_contact_toe_c(fine_toe_c+1) ind_contact_toe_c(end)+1];
 int_toe_c = unique(sort(int_toe_c));
 
@@ -937,6 +937,10 @@ else
     end
 end
 
+for i =1:length(int_toe_c)-1
+    vet_toe_r(i,:) = [toer(int_toe_c(i)) toer(int_toe_c(i)+1)];
+    d_r(i,:) = diff(vet_toe_r(i,:));
+end
 
 inizio_nuovo_toe = int_toe_c;
 inizio_nuovo_toe = inizio_nuovo_toe(1:2:end);

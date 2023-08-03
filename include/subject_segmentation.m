@@ -58,7 +58,7 @@ for i = 1:frames
     D_imm_feet = D_imm_l_t | D_imm_r_t;
     cd (d_fol)
     mkdir Feet_segmentation
-    %     h = figure;imshowpair(I,D_imm_feet),saveas(gcf,['Feet_segmentation\Feet', num2str(i-1) ,'.jpg']);
+    h = figure;imshowpair(I,D_imm_feet),saveas(gcf,['Feet_segmentation\Feet', num2str(i-1) ,'.jpg']);
     cd ..
     % Feet segmentation refinement
     if side == 'R'

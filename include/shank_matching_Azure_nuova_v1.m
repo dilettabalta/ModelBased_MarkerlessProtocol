@@ -1,6 +1,6 @@
 function results = shank_matching_Azure_nuova_v1(d_fol,lis,template,results)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunication
+%Department of Electronics and Telecommunications
 %Politecnico di Torino
 %diletta.balta@polito.it
 
@@ -20,7 +20,7 @@ set(0, 'DefaultFigureVisible', 'off')
 dim1_f = 720;
 dim2_f = 1280;
 inizio = 1;
-show_save_all = true;
+show_save_all = false;
 save_imp = false;
 
 if save_imp
@@ -50,9 +50,6 @@ clearvars shank_match shank_data
 for lu =  1:length(lis)
 
     drawnow
-    if stop_flag == true
-        return
-    end
     scaling = 1;
     KN_imm_T = template.knee';
     KN_pl_T = scaling*[abs(KN_imm_T(1)-dim1_f)+1; KN_imm_T(2)];
@@ -143,7 +140,7 @@ for lu =  1:length(lis)
     depth_segm_el(depth_segm_el == 0) = nan;
     most_freq = nanmedian(depth_match(foot1_rect{lu})); %#ok<NANMEDIAN> % median not mean to exclude outliers
     lim_left = 2000;
-    lim_right = 2800;
+    lim_right = 2850;
     depth_segm_el(depth_segm_el>lim_right) = NaN;
     depth_segm_el(depth_segm_el<lim_left) = NaN;
 

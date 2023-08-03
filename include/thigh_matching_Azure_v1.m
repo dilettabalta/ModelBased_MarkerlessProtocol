@@ -1,6 +1,6 @@
 function results = thigh_matching_Azure_v1(d_fol,lis,template,results)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunication
+%Department of Electronics and Telecommunications
 %Politecnico di Torino
 %diletta.balta@polito.it
 
@@ -118,7 +118,7 @@ for lu = 1:length(lis)
     end
 
     lim_left = 2300;
-    lim_right = 2750;
+    lim_right = 2850;
     depth_segm_el(depth_segm_el>lim_right) = NaN;
     depth_segm_el(depth_segm_el<lim_left) = NaN;
     lim_right = max(max(depth_segm_el));
