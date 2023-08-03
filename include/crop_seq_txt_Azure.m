@@ -1,6 +1,6 @@
 function crop_seq_txt_Azure(d_fol,start,stop,frame)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunication
+%Department of Electronics and Telecommunications
 %Politecnico di Torino 
 %diletta.balta@polito.it
 
