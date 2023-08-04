@@ -118,7 +118,7 @@ subject_segmentation(d_fol1,frames,B,side,sub); %function for subject segmentati
 %% Subject-specific models definition
 cd(pathname)
 disp('Static Model')
-template.static = dynamic_calib_ok_provaAzure_v1(d_fol1,0,side,'static',sub); %body segments templates in static
+template.static = dynamic_calib_ok_provaAzure_v1(d_fol1,0,side,'static',sub); %body segment templates in static
 try
     load ([d_fol '\ref_flex.mat']);
     load ([d_fol '\ref_load.mat']);
@@ -146,9 +146,9 @@ catch
 end
 
 disp('Load Model')
-template.load = dynamic_calib_ok_provaAzure_v1(d_fol,ref_load,side,'load',sub); %body segments templates in loading frame
+template.load = dynamic_calib_ok_provaAzure_v1(d_fol,ref_load,side,'load',sub); %body segment templates in loading frame
 disp('Flex Model')
-template.flex = dynamic_calib_ok_provaAzure_v1(d_fol,ref_flex,side,'flex',sub); %body segments templates in swing frame
+template.flex = dynamic_calib_ok_provaAzure_v1(d_fol,ref_flex,side,'flex',sub); %body segment templates in swing frame
 
 %%	JOINT CENTERS TRAJECTORIES ESTIMATION
 listu = lis;
