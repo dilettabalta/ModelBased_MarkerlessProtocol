@@ -1,6 +1,6 @@
 function [start1, stop1, start2, pos_IC1, pos_IC2, pos_IC1_c, stride_length, step_length, gait_speed] = gaitcycle(d_fol, start, stop, side, conv_factor)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunication
+%Department of Electronics and Telecommunications
 %Politecnico di Torino 
 %diletta.balta@polito.it
 
