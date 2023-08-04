@@ -5,7 +5,7 @@ function template = dynamic_calib_ok_provaAzure_v1(d_fol,frame,side,Type,~)
 %diletta.balta@polito.it
 
 %This function provides a MATLAB structure containing a set of body segments
-%templates (foot template, shank template and thigh template)following the methods described in the methodological paper (paragraph
+%templates (foot template, shank template and thigh template) following the methods described in the methodological paper (paragraph
 %ANATOMICAL CALIBRATION AND BODY SEGMENT TEMPLATES DEFINITION)
 
 %inputs
@@ -340,7 +340,6 @@ lim_right = 2850;
 depth_segm_el(depth_segm_el>lim_right) = NaN;
 depth_segm_el(depth_segm_el<lim_left) = NaN;
 
-%Otsu
 h = histogram(depth_segm_el);
 
 %% Otsu technique to identify the foregroung shank
@@ -359,19 +358,13 @@ if ind_merg == 1
     shank_start = lim_left;
     shank_stop = lim_right;
 else
-    figure()
-    histogram(depth_segm_el,'BinEdges',lim_left:lim_right)
-    xline(level(1),'--g','LineWidth',0.9)
+    %figure()
+    %histogram(depth_segm_el,'BinEdges',lim_left:lim_right)
+    %xline(level(1),'--g','LineWidth',0.9)
 
     shank_start = lim_left;
     shank_stop = level;
 end
-
-
-% if strcmp(Type,'static')
-%    shank_start = lim_left;
-%     shank_stop = lim_right;
-% end
 
 shank_depth = depth_segm_el;
 shank_depth(shank_depth<shank_start) = NaN;
