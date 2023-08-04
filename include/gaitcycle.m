@@ -1,7 +1,7 @@
 function [start1, stop1, start2, pos_IC1, pos_IC2, pos_IC1_c, stride_length, step_length, gait_speed] = gaitcycle(d_fol, start, stop, side, conv_factor)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunications
-%Politecnico di Torino
+%Department of Electronics and Telecommunication
+%Politecnico di Torino 
 %diletta.balta@polito.it
 
 %This function identifies the first and the last frame of the most central
@@ -23,7 +23,7 @@ function [start1, stop1, start2, pos_IC1, pos_IC2, pos_IC1_c, stride_length, ste
 %outputs
 %start1 = first frame of the gait cycle
 %stop1 = last frame of the gait cycle
-%start2 = frame representing the contact of the background foot
+%start2 = frame representing the contact of the background foot 
 %pos_IC1 = position of first initial contact of the foreground foot
 %pos_IC2 = position of the following initial contact of the foreground foot
 %pos_IC1_c = position of the first initial contact of the backgroung foot
@@ -719,7 +719,7 @@ contact_heel_c = (abs(dheelc)<=Thcolonne);
 contact_heel_c = bwareaopen(contact_heel_c,3);
 ind_contact_heel_c = find(contact_heel_c);
 d1 = diff(ind_contact_heel_c);
-fine_heel_c = find((d1>6));
+fine_heel_c = find((d1>1));
 int_heel_c = [ind_contact_heel_c(1) ind_contact_heel_c(fine_heel_c) ind_contact_heel_c(fine_heel_c+1) ind_contact_heel_c(end)];
 int_heel_c = unique(sort(int_heel_c)); %instants of stationarity of the y-coordinates (heel)
 
@@ -940,6 +940,22 @@ end
 for i =1:length(int_toe_c)-1
     vet_toe_r(i,:) = [toer(int_toe_c(i)) toer(int_toe_c(i)+1)];
     d_r(i,:) = diff(vet_toe_r(i,:));
+end
+
+inizio_nuovo_toe = int_toe_c;
+vet_toe_nuovo_r = vet_toe_r;
+
+
+for i=1:size(d_r,1)
+    check = nnz(abs(d_r(i,:))>2);
+    h=1;
+    while check>=1 && int_toe_c(i)+h+1<=length(toer)
+        vet_toe_nuovo_r(i,:) = [toer(int_toe_c(i)+h) toer(int_toe_c(i)+h+1)];
+        d_r_nuovo(i,:) = diff(vet_toe_nuovo_r(i,:));
+        check = nnz(abs(d_r_nuovo(i,:))>2);
+        inizio_nuovo_toe(i) = int_toe_c(i)+h;
+        h=h+1;
+    end
 end
 
 inizio_nuovo_toe = int_toe_c;
