@@ -22,10 +22,10 @@ D_imm_l_t = false(size(I,1),size(I,2));
 % figure
 % imshow(I)
 
-%Based on the environment/lights conditions or the socks colors, the thresholds for the color filters have to be adjusted
+%Based on the environment/lights conditions or the colors of socks, the thresholds for the color filters have to be adjusted
 
-for r = 480:600
-    for c = 165:1100 % Colonne
+for r = 480:600 %rows
+    for c = 165:1100 % columns
         pix = [I(r,c,1) I(r,c,2) I(r,c,3)];
         if  pix(1)<60 && pix(2)>=40 && pix(2)<=100 && pix(3)>90 && pix(3)<=250 %left foot blue
             D_imm_l_t(r,c) = true;
