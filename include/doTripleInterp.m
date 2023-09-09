@@ -9,7 +9,7 @@ function mod = doTripleInterp(a, b, c, param, f)
 %inputs
 %a = anatomical landmark positions obtained by the loading template
 %b = anatomical landmark positions obtained by the static template
-%c = anatomical landmark positions obtained by the swing template
+%c = anatomical landmark positions obtained by the swingg template
 %param = modulation parameters
 %f = stance frame
 

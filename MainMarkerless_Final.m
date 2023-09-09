@@ -118,7 +118,8 @@ subject_segmentation(d_fol1,frames,B,side,sub); %function for subject segmentati
 %% Subject-specific models definition
 cd(pathname)
 disp('Static Model')
-template.static = dynamic_calib_ok_provaAzure_v1(d_fol1,0,side,'static',sub); %body segment templates in static
+template.static = dynamic_calib_ok_provaAzure_v1(d_fol1,0,side,'static',sub); %creazione del modello lower-limb 2D in statica
+
 try
     load ([d_fol '\ref_flex.mat']);
     load ([d_fol '\ref_load.mat']);
@@ -146,9 +147,9 @@ catch
 end
 
 disp('Load Model')
-template.load = dynamic_calib_ok_provaAzure_v1(d_fol,ref_load,side,'load',sub); %body segment templates in loading frame
+template.load = dynamic_calib_ok_provaAzure_v1(d_fol,ref_load,side,'load',sub); %creazione del modello lower-limb 2D in load
 disp('Flex Model')
-template.flex = dynamic_calib_ok_provaAzure_v1(d_fol,ref_flex,side,'flex',sub); %body segment templates in swing frame
+template.flex = dynamic_calib_ok_provaAzure_v1(d_fol,ref_flex,side,'flex',sub); %creazione del modello lower-limb 2D in swing
 
 %%	JOINT CENTERS TRAJECTORIES ESTIMATION
 listu = lis;
@@ -166,21 +167,21 @@ end
 lis2=sort(lis2,'ascend');
 addpath('D:\Codici_MLM_final\include')
 disp('Kinematic estimations in:')
-res_static_f = foot_matching_sc(d_fol,side,lis2,template.static,sub); %foot fitting for estimating the lateral malleoulus positions through the static model
-res_static_f_s = shank_matching_Azure_nuova_v1(d_fol,lis2,template.static,res_static_f);%shank fitting for estimating the lateral epicondyle positions through the static model
-res_static_f_s_t = thigh_matching_Azure_v1(d_fol,lis2,template.static,res_static_f_s);%thigh fitting for estimating the great throcanter positions through the static model
+res_static_f = foot_matching_sc(d_fol,side,lis2,template.static,sub); %foot fitting for estimating the lateral malleoulus through the static model
+res_static_f_s = shank_matching_Azure_nuova_v1(d_fol,lis2,template.static,res_static_f);%shank fitting for estimating the lateral epicondyle through the static  model
+res_static_f_s_t = thigh_matching_Azure_v1(d_fol,lis2,template.static,res_static_f_s);%thigh fitting for estimating the great throcanter through the static model
 results.static = res_static_f_s_t;
 disp ('static')
 
-res_load_f = foot_matching_sc(d_fol,side,lis2,template.load,sub);%foot fitting for estimating the lateral malleoulus positions through the loading model
-res_load_f_s = shank_matching_Azure_nuova_v1(d_fol,lis2,template.load,res_load_f);%shank fitting for estimating the lateral epicondyle positions through the loading model
-res_load_f_s_t = thigh_matching_Azure_v1(d_fol,lis2,template.load,res_load_f_s);%thigh fitting for estimating the great throcanter positions through the loading model
+res_load_f = foot_matching_sc(d_fol,side,lis2,template.load,sub);%foot fitting for estimating the lateral malleoulus through the loading model
+res_load_f_s = shank_matching_Azure_nuova_v1(d_fol,lis2,template.load,res_load_f);%shank fitting for estimating the lateral epicondyle through the loading model
+res_load_f_s_t = thigh_matching_Azure_v1(d_fol,lis2,template.load,res_load_f_s);%thigh fitting for estimating the great throcanter through the loading model
 results.load = res_load_f_s_t;
 disp ('load')
 
-res_flex_f = foot_matching_sc(d_fol,side,lis2,template.flex,sub);%foot fitting for estimating the lateral malleoulus positions through the swing model
-res_flex_f_s = shank_matching_Azure_nuova_v1(d_fol,lis2,template.flex,res_flex_f);%shank fitting for estimating the lateral epicondyle positions through the swing model
-res_flex_f_s_t = thigh_matching_Azure_v1(d_fol,lis2,template.flex,res_flex_f_s); %thigh fitting for estimating the great throcanter positions through the swing model
+res_flex_f = foot_matching_sc(d_fol,side,lis2,template.flex,sub);%foot fitting for estimating the lateral malleoulus through the swing model
+res_flex_f_s = shank_matching_Azure_nuova_v1(d_fol,lis2,template.flex,res_flex_f);%shank fitting for estimating the lateral epicondyle through the swing model
+res_flex_f_s_t = thigh_matching_Azure_v1(d_fol,lis2,template.flex,res_flex_f_s); %thigh fitting for estimating the great throcanter through the swing model
 results.flex = res_flex_f_s_t;
 disp ('flex')
 

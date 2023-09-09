@@ -1,6 +1,6 @@
 function [start1, stop1, start2, pos_IC1, pos_IC2, pos_IC1_c, stride_length, step_length, gait_speed] = gaitcycle(d_fol, start, stop, side, conv_factor)
 %Author: Diletta Balta
-%Department of Electronics and Telecommunications
+%Department of Electronics and Telecommunication
 %Politecnico di Torino 
 %diletta.balta@polito.it
 
@@ -944,19 +944,6 @@ end
 
 inizio_nuovo_toe = int_toe_c;
 vet_toe_nuovo_r = vet_toe_r;
-
-
-for i=1:size(d_r,1)
-    check = nnz(abs(d_r(i,:))>2);
-    h=1;
-    while check>=1 && int_toe_c(i)+h+1<=length(toer)
-        vet_toe_nuovo_r(i,:) = [toer(int_toe_c(i)+h) toer(int_toe_c(i)+h+1)];
-        d_r_nuovo(i,:) = diff(vet_toe_nuovo_r(i,:));
-        check = nnz(abs(d_r_nuovo(i,:))>2);
-        inizio_nuovo_toe(i) = int_toe_c(i)+h;
-        h=h+1;
-    end
-end
 
 inizio_nuovo_toe = int_toe_c;
 inizio_nuovo_toe = inizio_nuovo_toe(1:2:end);

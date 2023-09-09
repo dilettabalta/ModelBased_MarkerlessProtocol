@@ -4,7 +4,7 @@ function results = thigh_matching_Azure_v1(d_fol,lis,template,results)
 %Politecnico di Torino
 %diletta.balta@polito.it
 
-%This function provides GT positions in each frame by matching the thigh template to each thigh mask by using ICP following the methods described in the methodological paper
+%This function provides GT positions in each frame by matching the shank template to each shank mask by using ICP following the methods described in the methodological paper
 % paragraph JOINT CENTERS TRAJECTORIES ESTIMATION - hip joint center (HJC) estimation).
 
 %inputs
@@ -117,8 +117,8 @@ for lu = 1:length(lis)
         most_freq = nanmedian(nanmedian(shank_depth(shank_depth~=0)));
     end
 
-    lim_left = 2300;
-    lim_right = 2850;
+    lim_left = most_freq-400 ;
+    lim_right = most_freq+100 ;
     depth_segm_el(depth_segm_el>lim_right) = NaN;
     depth_segm_el(depth_segm_el<lim_left) = NaN;
     lim_right = max(max(depth_segm_el));
